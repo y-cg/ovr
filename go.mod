@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/alecthomas/kong v1.15.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
