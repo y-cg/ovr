@@ -1,0 +1,8 @@
+=== base.toml ===
+plugins = ["a", "b"]
+
+=== override.toml ===
+plugins = ["c"]
+
+=== output (toml) ===
+plugins = ["a", "b", "c"]

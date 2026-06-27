@@ -36,7 +36,7 @@ func load(t *testing.T, dir, name string) fixture {
 // mergeAndSnap runs merge.Merge on the given fixtures, then compares (or writes)
 // a snapshot at testdata/snapshots/<TestName>.snap.
 // Run with UPDATE_SNAPS=true to create or refresh snapshots.
-func mergeAndSnap(t *testing.T, fixtures []fixture, outputFormat merge.Format) {
+func mergeAndSnap(t *testing.T, fixtures []fixture, outputFormat merge.Format, opts merge.Options) {
 	t.Helper()
 
 	inputs := make([]merge.Input, len(fixtures))
@@ -44,7 +44,7 @@ func mergeAndSnap(t *testing.T, fixtures []fixture, outputFormat merge.Format) {
 		inputs[i] = f.Input
 	}
 
-	out, err := merge.Merge(inputs, outputFormat)
+	out, err := merge.Merge(inputs, outputFormat, opts)
 	if err != nil {
 		t.Fatal(err)
 	}

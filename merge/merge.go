@@ -18,15 +18,29 @@ const (
 	YAML Format = "yaml"
 )
 
+type ArrayMode int
+
+const (
+	// ArrayReplace is the default: the override array wins entirely.
+	ArrayReplace ArrayMode = iota
+	// ArrayAppend concatenates base and override arrays.
+	ArrayAppend
+)
+
+type Options struct {
+	Arrays ArrayMode
+}
+
 type Input struct {
 	Data   []byte
 	Format Format
 }
 
 // Merge deep-merges inputs left-to-right and serializes the result as outputFormat.
-// Later inputs win on scalar conflicts. Arrays are replaced, not appended.
-// A null value in an override deletes the key (tombstone). Type conflicts are hard errors.
-func Merge(inputs []Input, outputFormat Format) ([]byte, error) {
+// Later inputs win on scalar conflicts. Type conflicts are hard errors.
+// A null value in an override deletes the key (tombstone).
+// Array behavior is controlled by opts.Arrays (replace by default).
+func Merge(inputs []Input, outputFormat Format, opts Options) ([]byte, error) {
 	if len(inputs) == 0 {
 		return nil, fmt.Errorf("no inputs")
 	}
@@ -41,7 +55,7 @@ func Merge(inputs []Input, outputFormat Format) ([]byte, error) {
 		if err != nil {
 			return nil, fmt.Errorf("input %d: %w", i+2, err)
 		}
-		result, err = deepMerge(result, next)
+		result, err = deepMerge(result, next, opts)
 		if err != nil {
 			return nil, fmt.Errorf("merging input %d: %w", i+2, err)
 		}
@@ -58,8 +72,6 @@ func parse(input Input) (map[string]any, error) {
 	var m map[string]any
 	switch input.Format {
 	case JSON:
-		// Use a decoder with UseNumber disabled so numbers come back as float64,
-		// consistent with YAML's behavior.
 		if err := json.Unmarshal(input.Data, &m); err != nil {
 			return nil, err
 		}
@@ -84,11 +96,12 @@ func parse(input Input) (map[string]any, error) {
 // deepMerge merges override onto base, returning a new map.
 // Keys present only in base are kept. Keys present only in override are added.
 // Keys present in both are merged according to their types:
-//   - Both maps  → recurse
+//   - Both maps      → recurse
 //   - Map vs non-map → hard error (structural conflict)
-//   - nil override value → tombstone, delete the key
-//   - Anything else → override wins
-func deepMerge(base, override map[string]any) (map[string]any, error) {
+//   - nil override   → tombstone, delete the key
+//   - Both arrays    → replace or append depending on opts.Arrays
+//   - Anything else  → override wins
+func deepMerge(base, override map[string]any, opts Options) (map[string]any, error) {
 	result := make(map[string]any, len(base))
 	for k, v := range base {
 		result[k] = v
@@ -113,7 +126,7 @@ func deepMerge(base, override map[string]any) (map[string]any, error) {
 		switch {
 		case bIsMap && oIsMap:
 			// Both sides are objects — recurse into them.
-			merged, err := deepMerge(bMap, oMap)
+			merged, err := deepMerge(bMap, oMap, opts)
 			if err != nil {
 				return nil, fmt.Errorf(".%s%w", k, err)
 			}
@@ -125,12 +138,26 @@ func deepMerge(base, override map[string]any) (map[string]any, error) {
 			return nil, fmt.Errorf(": type conflict at key %q (base is %T, override is %T)", k, bv, ov)
 
 		default:
-			// Both are scalars or both are arrays — override wins.
+			// Both are scalars or both are arrays.
+			if opts.Arrays == ArrayAppend {
+				bSlice, bIsSlice := toSlice(bv)
+				oSlice, oIsSlice := toSlice(ov)
+				if bIsSlice && oIsSlice {
+					result[k] = append(bSlice, oSlice...)
+					continue
+				}
+			}
+			// Scalar, or ArrayReplace mode: override wins.
 			result[k] = ov
 		}
 	}
 
 	return result, nil
+}
+
+func toSlice(v any) ([]any, bool) {
+	s, ok := v.([]any)
+	return s, ok
 }
 
 // ==============================================================================
