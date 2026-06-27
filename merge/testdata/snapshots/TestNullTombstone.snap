@@ -1,0 +1,10 @@
+=== base.json ===
+{"a": 1, "b": 2}
+
+=== override.json ===
+{"b": null}
+
+=== output (json) ===
+{
+  "a": 1
+}

@@ -1,0 +1,33 @@
+
+[TestDeepMerge - 1]
+[database]
+  host = "localhost"
+  port = 3306
+
+---
+
+[TestArrayReplacement - 1]
+plugins = ["c"]
+
+---
+
+[TestNullTombstone - 1]
+{
+  "a": 1
+}
+---
+
+[TestCrossFormatMerge - 1]
+server:
+    host: localhost
+    port: 9090
+
+---
+
+[TestThreeLayerMerge - 1]
+[app]
+  debug = true
+  log_level = "debug"
+  workers = 8
+
+---

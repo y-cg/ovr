@@ -1,0 +1,13 @@
+=== base.toml ===
+[database]
+host = "localhost"
+port = 5432
+
+=== override.toml ===
+[database]
+port = 3306
+
+=== output (toml) ===
+[database]
+  host = "localhost"
+  port = 3306

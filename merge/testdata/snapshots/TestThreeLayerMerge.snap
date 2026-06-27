@@ -1,0 +1,20 @@
+=== 01_base.toml ===
+[app]
+debug = false
+log_level = "info"
+workers = 4
+
+=== 02_env.toml ===
+[app]
+debug = true
+log_level = "debug"
+
+=== 03_local.toml ===
+[app]
+workers = 8
+
+=== output (toml) ===
+[app]
+  debug = true
+  log_level = "debug"
+  workers = 8

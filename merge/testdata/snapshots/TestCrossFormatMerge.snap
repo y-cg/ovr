@@ -1,0 +1,12 @@
+=== base.toml ===
+[server]
+host = "localhost"
+port = 8080
+
+=== override.json ===
+{"server": {"port": 9090}}
+
+=== output (yaml) ===
+server:
+    host: localhost
+    port: 9090
