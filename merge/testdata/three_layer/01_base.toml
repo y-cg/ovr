@@ -1,0 +1,4 @@
+[app]
+debug = false
+log_level = "info"
+workers = 4
