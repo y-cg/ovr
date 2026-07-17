@@ -8,19 +8,148 @@ schema = 3
     hash = "sha256-ptdUJvuc21ixeLt+M5way/na3aCnCO4MYHWulWp8NEY="
     go = "1.18"
     packages = ["github.com/BurntSushi/toml", "github.com/BurntSushi/toml/internal"]
+  [mod."github.com/alecthomas/chroma/v2"]
+    version = "v2.20.0"
+    hash = "sha256-rL1mJS8fCltcii9w/efyyE4iyzogyjP+N80lE3CuzVE="
+    go = "1.22"
+    packages = ["github.com/alecthomas/chroma/v2", "github.com/alecthomas/chroma/v2/formatters", "github.com/alecthomas/chroma/v2/formatters/html", "github.com/alecthomas/chroma/v2/formatters/svg", "github.com/alecthomas/chroma/v2/lexers", "github.com/alecthomas/chroma/v2/quick", "github.com/alecthomas/chroma/v2/styles"]
   [mod."github.com/alecthomas/kong"]
     version = "v1.15.0"
     hash = "sha256-KQdP4ILTBCF29nD+P/ZVW0NsENfTEFtoWmEd1bo4IuU="
     go = "1.20"
     packages = ["github.com/alecthomas/kong"]
+  [mod."github.com/aymanbagabas/go-osc52/v2"]
+    version = "v2.0.1"
+    hash = "sha256-6Bp0jBZ6npvsYcKZGHHIUSVSTAMEyieweAX2YAKDjjg="
+    go = "1.16"
+    packages = ["github.com/aymanbagabas/go-osc52/v2"]
+  [mod."github.com/aymerick/douceur"]
+    version = "v0.2.0"
+    hash = "sha256-NiBX8EfOvLXNiK3pJaZX4N73YgfzdrzRXdiBFe3X3sE="
+    packages = ["github.com/aymerick/douceur/css", "github.com/aymerick/douceur/parser"]
+  [mod."github.com/charmbracelet/colorprofile"]
+    version = "v0.2.3-0.20250311203215-f60798e515dc"
+    hash = "sha256-D9E/bMOyLXAUVOHA1/6o3i+vVmLfwIMOWib6sU7A6+Q="
+    go = "1.18"
+    packages = ["github.com/charmbracelet/colorprofile"]
+  [mod."github.com/charmbracelet/glamour"]
+    version = "v1.0.0"
+    hash = "sha256-1sGgVA3QXJ2P5c/DNMb7R0HFG1X5vz9nmDhLrzKdgMw="
+    go = "1.24.0"
+    packages = ["github.com/charmbracelet/glamour", "github.com/charmbracelet/glamour/ansi", "github.com/charmbracelet/glamour/internal/autolink", "github.com/charmbracelet/glamour/styles"]
+  [mod."github.com/charmbracelet/lipgloss"]
+    version = "v1.1.1-0.20250404203927-76690c660834"
+    hash = "sha256-CwS1AyoRsPOFA4SrC0CTtwLnbg57FmmSW/mvVQUFYcc="
+    go = "1.18"
+    packages = ["github.com/charmbracelet/lipgloss", "github.com/charmbracelet/lipgloss/table"]
+  [mod."github.com/charmbracelet/x/ansi"]
+    version = "v0.10.2"
+    hash = "sha256-+JMWFbgv/5Wl2UERKxY4p5oayCRgJEDZpt2ACu3oG1o="
+    go = "1.24.0"
+    packages = ["github.com/charmbracelet/x/ansi", "github.com/charmbracelet/x/ansi/parser"]
+  [mod."github.com/charmbracelet/x/cellbuf"]
+    version = "v0.0.13"
+    hash = "sha256-ubgBd82jcS5L4i6rCFLOB1BXGrDEu6wWlciJA0gsH2g="
+    go = "1.18"
+    packages = ["github.com/charmbracelet/x/cellbuf"]
+  [mod."github.com/charmbracelet/x/exp/slice"]
+    version = "v0.0.0-20250327172914-2fdc97757edf"
+    hash = "sha256-C1tksnevc/RdytJRQg5LQ0+VVSWlTwbNGic649m6E1Q="
+    go = "1.19"
+    packages = ["github.com/charmbracelet/x/exp/slice"]
+  [mod."github.com/charmbracelet/x/term"]
+    version = "v0.2.1"
+    hash = "sha256-VBkCZLI90PhMasftGw3403IqoV7d3E5WEGAIVrN5xQM="
+    go = "1.18"
+    packages = ["github.com/charmbracelet/x/term"]
+  [mod."github.com/dlclark/regexp2"]
+    version = "v1.11.5"
+    hash = "sha256-jN5+2ED+YbIoPIuyJ4Ou5pqJb2w1uNKzp5yTjKY6rEQ="
+    go = "1.13"
+    packages = ["github.com/dlclark/regexp2", "github.com/dlclark/regexp2/syntax"]
+  [mod."github.com/gorilla/css"]
+    version = "v1.0.1"
+    hash = "sha256-6JwNHqlY2NpZ0pSQTyYPSpiNqjXOdFHqrUT10sv3y8A="
+    go = "1.20"
+    packages = ["github.com/gorilla/css/scanner"]
   [mod."github.com/kr/pretty"]
     version = "v0.3.1"
     hash = "sha256-DlER7XM+xiaLjvebcIPiB12oVNjyZHuJHoRGITzzpKU="
     go = "1.12"
+  [mod."github.com/lucasb-eyer/go-colorful"]
+    version = "v1.3.0"
+    hash = "sha256-6BKrJsfmxie+YFAWzTYVPQfrwjQEXRo+J8LY+50C1BU="
+    go = "1.12"
+    packages = ["github.com/lucasb-eyer/go-colorful"]
+  [mod."github.com/mattn/go-isatty"]
+    version = "v0.0.20"
+    hash = "sha256-qhw9hWtU5wnyFyuMbKx+7RB8ckQaFQ8D+8GKPkN3HHQ="
+    go = "1.15"
+    packages = ["github.com/mattn/go-isatty"]
+  [mod."github.com/mattn/go-runewidth"]
+    version = "v0.0.17"
+    hash = "sha256-Xeb3F+WZhyhEWNKuWRm/umc2FolXYHtbi3QoPfDPtaA="
+    go = "1.9"
+    packages = ["github.com/mattn/go-runewidth"]
+  [mod."github.com/microcosm-cc/bluemonday"]
+    version = "v1.0.27"
+    hash = "sha256-EZSya9FLPQ83CL7N2cZy21fdS35hViTkiMK5f3op8Es="
+    go = "1.19"
+    packages = ["github.com/microcosm-cc/bluemonday", "github.com/microcosm-cc/bluemonday/css"]
+  [mod."github.com/muesli/reflow"]
+    version = "v0.3.0"
+    hash = "sha256-Pou2ybE9SFSZG6YfZLVV1Eyfm+X4FuVpDPLxhpn47Cc="
+    go = "1.13"
+    packages = ["github.com/muesli/reflow/ansi", "github.com/muesli/reflow/indent", "github.com/muesli/reflow/padding", "github.com/muesli/reflow/wordwrap"]
+  [mod."github.com/muesli/termenv"]
+    version = "v0.16.0"
+    hash = "sha256-hGo275DJlyLtcifSLpWnk8jardOksdeX9lH4lBeE3gI="
+    go = "1.17"
+    packages = ["github.com/muesli/termenv"]
+  [mod."github.com/rivo/uniseg"]
+    version = "v0.4.7"
+    hash = "sha256-rDcdNYH6ZD8KouyyiZCUEy8JrjOQoAkxHBhugrfHjFo="
+    go = "1.18"
+    packages = ["github.com/rivo/uniseg"]
   [mod."github.com/rogpeppe/go-internal"]
     version = "v1.13.1"
     hash = "sha256-fD4n3XVDNHL7hfUXK9qi31LpBVzWnRK/7LNc3BmPtnU="
     go = "1.22"
+  [mod."github.com/xo/terminfo"]
+    version = "v0.0.0-20220910002029-abceb7e1c41e"
+    hash = "sha256-GyCDxxMQhXA3Pi/TsWXpA8cX5akEoZV7CFx4RO3rARU="
+    go = "1.19"
+    packages = ["github.com/xo/terminfo"]
+  [mod."github.com/yuin/goldmark"]
+    version = "v1.7.13"
+    hash = "sha256-vBCxZrPYPc8x/nvAAv3Au59dCCyfS80Vw3/a9EXK7TE="
+    go = "1.22"
+    packages = ["github.com/yuin/goldmark", "github.com/yuin/goldmark/ast", "github.com/yuin/goldmark/extension", "github.com/yuin/goldmark/extension/ast", "github.com/yuin/goldmark/parser", "github.com/yuin/goldmark/renderer", "github.com/yuin/goldmark/renderer/html", "github.com/yuin/goldmark/text", "github.com/yuin/goldmark/util"]
+  [mod."github.com/yuin/goldmark-emoji"]
+    version = "v1.0.6"
+    hash = "sha256-+d6bZzOPE+JSFsZbQNZMCWE+n3jgcQnkPETVk47mxSY="
+    go = "1.22"
+    packages = ["github.com/yuin/goldmark-emoji", "github.com/yuin/goldmark-emoji/ast", "github.com/yuin/goldmark-emoji/definition"]
+  [mod."golang.org/x/net"]
+    version = "v0.38.0"
+    hash = "sha256-iHmyxkZQLw1PsUZaXHMt84GrjbXPvkEc92sLoK3W++c="
+    go = "1.23.0"
+    packages = ["golang.org/x/net/html", "golang.org/x/net/html/atom"]
+  [mod."golang.org/x/sys"]
+    version = "v0.47.0"
+    hash = "sha256-TpbRyWWqHjddP6QzUgAbaLd2EE0S+GYNRUIDJd18r98="
+    go = "1.25.0"
+    packages = ["golang.org/x/sys/unix", "golang.org/x/sys/windows"]
+  [mod."golang.org/x/term"]
+    version = "v0.45.0"
+    hash = "sha256-vPBeJkepEZ1D9k4oaV20IuQlVmfAFv15KQgnhl9MNgw="
+    go = "1.25.0"
+    packages = ["golang.org/x/term"]
+  [mod."golang.org/x/text"]
+    version = "v0.30.0"
+    hash = "sha256-VPT1Y2zzgdk+Q3Gx8hdwKdxbVh0/Zn/HwDpILCW3ZNA="
+    go = "1.24.0"
+    packages = ["golang.org/x/text/cases", "golang.org/x/text/internal", "golang.org/x/text/internal/language", "golang.org/x/text/internal/language/compact", "golang.org/x/text/internal/tag", "golang.org/x/text/language", "golang.org/x/text/transform", "golang.org/x/text/unicode/norm"]
   [mod."gopkg.in/check.v1"]
     version = "v1.0.0-20190902080502-41f04d3bba15"
     hash = "sha256-Xl5gjoqU26M+Yxm6Xok5VHVpYT5hItwsN7d2Wj9L020="
