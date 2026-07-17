@@ -11,6 +11,6 @@ Agent-facing usage and merge semantics live in `merge/explain.md`, printed by `o
 
 ## Consequences
 
-- `merge` embeds `explain.md` and owns example tests; `cmd/ovr` prints it via `ovr explain`.
+- `merge` embeds `explain.md` and owns example tests; `cmd/ovr` prints it via `ovr explain` (raw for non-TTY/`--raw`; glamour-rendered for interactive TTY). Presentation must not become a second untested semantics source.
 - Array replace is the default contract; array append is documented with an explicit example tied to `--array-append`.
 - Tombstones require a format that can express `null` (JSON/YAML, not TOML).

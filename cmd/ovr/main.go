@@ -7,10 +7,13 @@ import (
 
 	"github.com/alecthomas/kong"
 	"github.com/y-cg/ovr/merge"
+	"golang.org/x/term"
 )
 
 var cli struct {
-	Explain struct{} `cmd:"" help:"Print the tested merge and CLI contract."`
+	Explain struct {
+		Raw bool `name:"raw" help:"Force raw contract markdown even when stdout is a TTY."`
+	} `cmd:"" help:"Print the tested merge and CLI contract."`
 
 	Merge struct {
 		Files        []string `arg:"" name:"file" help:"Input Layers to merge left-to-right. Later Layers win." min:"2"`
@@ -29,7 +32,8 @@ func main() {
 	var err error
 	switch ctx.Command() {
 	case "explain":
-		_, err = os.Stdout.WriteString(merge.ExplainDoc)
+		interactive := term.IsTerminal(int(os.Stdout.Fd()))
+		err = writeExplain(os.Stdout, merge.ExplainDoc, interactive, cli.Explain.Raw)
 	default:
 		err = runMerge()
 	}

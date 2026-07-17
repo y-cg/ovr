@@ -44,7 +44,7 @@ ovr explain                                 # merge + CLI contract (tested)
 - No config file (`.ovr.toml` etc.) — intentionally kept simple
 - Output: stdout by default, `-o <file>` to write to a file
 - Output format precedence: `--output-format` / `-f` if set; else known `-o` extension; else first Layer's format. Hard error when `-f` and a known `-o` extension disagree.
-- Agent-facing contract: `merge` embeds `explain.md`; `ovr explain` prints it; README points at it only — see [ADR 0001](docs/adr/0001-explain-as-tested-contract.md)
+- Agent-facing contract: `merge` embeds `explain.md`; `ovr explain` prints it (raw on non-TTY / `--raw`; glamour-rendered on TTY); README points at it only — see [ADR 0001](docs/adr/0001-explain-as-tested-contract.md)
 
 ### Language & distribution
 - **Go**
