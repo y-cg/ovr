@@ -11,8 +11,8 @@ import (
 
 var cli struct {
 	Files        []string `arg:"" name:"file" help:"Input files to merge left-to-right. Later files win." min:"2"`
-	OutputFormat string   `short:"f" name:"output-format" help:"Output format (toml, json, yaml). Defaults to the first file's format."`
-	Output       string   `short:"o" name:"output" help:"Write output to file instead of stdout."`
+	OutputFormat string   `short:"f" name:"output-format" help:"Output format (toml, json, yaml). Defaults to -o extension, else the first file's format."`
+	Output       string   `short:"o" name:"output" help:"Write output to file instead of stdout. Extension sets format when -f is omitted."`
 	ArrayAppend  bool     `name:"array-append" help:"Append arrays instead of replacing them."`
 }
 
@@ -34,7 +34,7 @@ func run() error {
 		return err
 	}
 
-	outputFormat, err := resolveOutputFormat(cli.OutputFormat, cli.Files[0])
+	outputFormat, err := resolveOutputFormat(cli.OutputFormat, cli.Output, cli.Files[0])
 	if err != nil {
 		return err
 	}
@@ -69,13 +69,45 @@ func readInputs(paths []string) ([]merge.Input, error) {
 	return inputs, nil
 }
 
-// resolveOutputFormat returns the explicit format if given, otherwise infers
-// it from the first input file's extension.
-func resolveOutputFormat(explicit, firstFile string) (merge.Format, error) {
+// resolveOutputFormat picks the output format: -f if set, else -o extension
+// if known, else the first input file's extension. Errors when -f and a known
+// -o extension disagree.
+func resolveOutputFormat(explicit, outputPath, firstFile string) (merge.Format, error) {
+	fromOutput, outputExt, hasOutputExt := formatFromOutputPath(outputPath)
+
 	if explicit != "" {
-		return merge.FormatFromExt(explicit)
+		fromFlag, err := merge.FormatFromExt(explicit)
+		if err != nil {
+			return "", err
+		}
+		if hasOutputExt && fromFlag != fromOutput {
+			return "", fmt.Errorf("output format %q conflicts with output file extension %q", fromFlag, outputExt)
+		}
+		return fromFlag, nil
 	}
+
+	if hasOutputExt {
+		return fromOutput, nil
+	}
+
 	return merge.FormatFromExt(filepath.Ext(firstFile))
+}
+
+// formatFromOutputPath returns a format when path has a known extension.
+// Unknown or missing extensions are ignored (ok=false), not errors.
+func formatFromOutputPath(path string) (format merge.Format, ext string, ok bool) {
+	if path == "" {
+		return "", "", false
+	}
+	ext = filepath.Ext(path)
+	if ext == "" {
+		return "", "", false
+	}
+	format, err := merge.FormatFromExt(ext)
+	if err != nil {
+		return "", ext, false
+	}
+	return format, ext, true
 }
 
 // writeOutput writes to stdout or to a file if a path was given.

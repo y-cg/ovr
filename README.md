@@ -34,5 +34,5 @@ ovr [--output-format FORMAT] [-o FILE] <files>...
 
 | Flag | Default | Description |
 |---|---|---|
-| `--output-format` | first input's format | Output format: `toml`, `json`, or `yaml` |
-| `-o` | stdout | Write output to a file instead |
+| `--output-format` / `-f` | `-o` extension, else first input | Output format: `toml`, `json`, or `yaml`. Errors if it disagrees with a known `-o` extension. |
+| `-o` | stdout | Write output to a file. A known extension (`.toml`, `.json`, `.yaml`, `.yml`) sets the format when `-f` is omitted. |

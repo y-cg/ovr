@@ -21,7 +21,7 @@ ovr base.toml dev.toml local.yaml -o out.toml  # write to file
 - Positional args, left-to-right precedence
 - No config file (`.ovr.toml` etc.) — intentionally kept simple
 - Output: stdout by default, `-o <file>` to write to a file
-- Output format: `--output-format` flag, defaults to the first input file's format
+- Output format precedence: `--output-format` / `-f` if set; else known `-o` extension; else first input's format. Hard error when `-f` and a known `-o` extension disagree.
 
 ### Language & distribution
 - **Go**
