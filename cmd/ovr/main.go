@@ -10,37 +10,49 @@ import (
 )
 
 var cli struct {
-	Files        []string `arg:"" name:"file" help:"Input files to merge left-to-right. Later files win." min:"2"`
-	OutputFormat string   `short:"f" name:"output-format" help:"Output format (toml, json, yaml). Defaults to -o extension, else the first file's format."`
-	Output       string   `short:"o" name:"output" help:"Write output to file instead of stdout. Extension sets format when -f is omitted."`
-	ArrayAppend  bool     `name:"array-append" help:"Append arrays instead of replacing them."`
+	Explain struct{} `cmd:"" help:"Print the tested merge and CLI contract."`
+
+	Merge struct {
+		Files        []string `arg:"" name:"file" help:"Input Layers to merge left-to-right. Later Layers win." min:"2"`
+		OutputFormat string   `short:"f" name:"output-format" help:"Output format (toml, json, yaml). Defaults to -o extension, else the first Layer's format."`
+		Output       string   `short:"o" name:"output" help:"Write output to file instead of stdout. Extension sets format when -f is omitted."`
+		ArrayAppend  bool     `name:"array-append" help:"Append arrays instead of replacing them."`
+	} `cmd:"" default:"withargs" help:"Deep-merge config Layers left-to-right."`
 }
 
 func main() {
-	kong.Parse(&cli,
+	ctx := kong.Parse(&cli,
 		kong.Name("ovr"),
-		kong.Description("Deep-merge TOML, JSON, and YAML config files left-to-right."),
+		kong.Description("Deep-merge TOML, JSON, and YAML config Layers left-to-right.\n\nSee: ovr explain"),
 	)
 
-	if err := run(); err != nil {
+	var err error
+	switch ctx.Command() {
+	case "explain":
+		_, err = os.Stdout.WriteString(merge.ExplainDoc)
+	default:
+		err = runMerge()
+	}
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "ovr: %v\n", err)
 		os.Exit(1)
 	}
 }
 
-func run() error {
-	inputs, err := readInputs(cli.Files)
+func runMerge() error {
+	m := cli.Merge
+	inputs, err := readInputs(m.Files)
 	if err != nil {
 		return err
 	}
 
-	outputFormat, err := resolveOutputFormat(cli.OutputFormat, cli.Output, cli.Files[0])
+	outputFormat, err := resolveOutputFormat(m.OutputFormat, m.Output, m.Files[0])
 	if err != nil {
 		return err
 	}
 
 	opts := merge.Options{}
-	if cli.ArrayAppend {
+	if m.ArrayAppend {
 		opts.Arrays = merge.ArrayAppend
 	}
 
@@ -49,7 +61,7 @@ func run() error {
 		return err
 	}
 
-	return writeOutput(out, cli.Output)
+	return writeOutput(out, m.Output)
 }
 
 // readInputs reads each file from disk and infers its format from the extension.

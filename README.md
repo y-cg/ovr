@@ -1,18 +1,14 @@
 # ovr
 
-Deep-merge TOML, JSON, and YAML config files. Later files override earlier ones.
+Deep-merge TOML, JSON, and YAML config Layers. Later Layers override earlier ones.
 
 ```
 ovr base.toml dev.toml local.yaml
 ovr base.toml dev.toml local.yaml -o out.toml
+ovr explain
 ```
 
-## Merge semantics
-
-- **Scalars and maps**: later file wins
-- **Arrays**: replace entirely — later file wins
-- **`null`**: tombstone — removes the key from output
-- **Type conflicts**: hard error
+Merge rules, tombstones, type conflicts, and CLI format resolution are the tested contract printed by **`ovr explain`** (source: [`merge/explain.md`](merge/explain.md)).
 
 ## Install
 
@@ -29,10 +25,14 @@ nix run github:y-cg/ovr
 ## Usage
 
 ```
-ovr [--output-format FORMAT] [-o FILE] <files>...
+ovr explain
+ovr [--output-format FORMAT] [-o FILE] [--array-append] <files>...
 ```
 
 | Flag | Default | Description |
 |---|---|---|
-| `--output-format` / `-f` | `-o` extension, else first input | Output format: `toml`, `json`, or `yaml`. Errors if it disagrees with a known `-o` extension. |
-| `-o` | stdout | Write output to a file. A known extension (`.toml`, `.json`, `.yaml`, `.yml`) sets the format when `-f` is omitted. |
+| `--output-format` / `-f` | `-o` extension, else first Layer | `toml`, `json`, or `yaml`. Errors if it disagrees with a known `-o` extension. |
+| `-o` | stdout | Write to a file. A known extension sets format when `-f` is omitted. |
+| `--array-append` | off | Concatenate arrays instead of replacing them. |
+
+Full contract: `ovr explain`.
